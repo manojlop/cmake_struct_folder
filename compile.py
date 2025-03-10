@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-
 import argparse
 import subprocess
 import os
@@ -7,25 +6,30 @@ import os
 def run_command(command):
     """Helper function to run a shell command."""
     print(f"Running: {' '.join(command)}")
-    result = subprocess.run(command, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    if result.returncode != 0:
-        print(f"Error: {result.stderr.decode()}")
-        exit(result.returncode)
+    result = subprocess.run(command)
 
 def main():
     parser = argparse.ArgumentParser(description="Compile and build project using CMake.")
-    parser.add_argument("-d", "--define", help="Set compile definitions for Project", default=None)
+    
+    # Changed from default=None to action="append" to collect multiple definitions
+    parser.add_argument("-d", "--define", help="Set compile definitions for Project (can be used multiple times)", 
+                        action="append", dest="definitions")
     parser.add_argument("-q", "--quick", help="Enable quick compilation mode", action="store_true")
     parser.add_argument("-t", "--target", help="Target filename for quick compilation (used with -q)", default=None)
     parser.add_argument("-dbg", "--debug", help="Enable debug mode with debug flags", action="store_true")
     
     args = parser.parse_args()
+    
     build_dir = "build"
     os.makedirs(build_dir, exist_ok=True)
     
     cmake_command = ["cmake", "-B", build_dir, "-S", "."]
-    if args.define:
-        cmake_command.append(f"-DCMAKE_CXX_FLAGS=\"-D{args.define}\"")
+    
+    # Handle multiple definitions by adding them to CMAKE_CXX_FLAGS
+    if args.definitions:
+        # Join all definitions with proper formatting
+        definitions_str = " ".join([f"-D{definition}" for definition in args.definitions])
+        cmake_command.append(f"-DCMAKE_CXX_FLAGS={definitions_str}")
     
     if args.quick:
         if not args.target:
@@ -45,6 +49,6 @@ def main():
     run_command(build_command)
     
     print("Build complete!")
-    
+
 if __name__ == "__main__":
     main()
