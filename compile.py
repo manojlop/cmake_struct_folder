@@ -14,7 +14,7 @@ def run_command(command):
 
 def main():
     parser = argparse.ArgumentParser(description="Compile and build project using CMake.")
-    parser.add_argument("-d", "--define", help="Set compile definitions for MyProject", default=None)
+    parser.add_argument("-d", "--define", help="Set compile definitions for Project", default=None)
     parser.add_argument("-q", "--quick", help="Enable quick compilation mode", action="store_true")
     parser.add_argument("-t", "--target", help="Target filename for quick compilation (used with -q)", default=None)
     parser.add_argument("-dbg", "--debug", help="Enable debug mode with debug flags", action="store_true")
@@ -25,7 +25,7 @@ def main():
     
     cmake_command = ["cmake", "-B", build_dir, "-S", "."]
     if args.define:
-        cmake_command.append(f"-DEXAMPLE_DEFINE={args.define}")
+        cmake_command.append(f"-DCMAKE_CXX_FLAGS=\"-D{args.define}\"")
     
     if args.quick:
         if not args.target:
