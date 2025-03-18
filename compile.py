@@ -11,8 +11,8 @@ def run_command(command):
 
 def main():
     parser = argparse.ArgumentParser(description="Compile and build project using CMake.")
-
-     # Changed from default=None to action="append" to collect multiple definitions
+    
+    # Changed from default=None to action="append" to collect multiple definitions
     parser.add_argument("-d", "--define", help="Set compile definitions for Project (can be used multiple times)", 
                         action="append", dest="definitions")
     parser.add_argument("-q", "--quick", help="Enable quick compilation mode", action="store_true")
@@ -49,6 +49,6 @@ def main():
     run_command(build_command)
     
     print("Build complete!")
-    
+
 if __name__ == "__main__":
     main()

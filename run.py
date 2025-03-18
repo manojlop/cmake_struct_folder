@@ -8,9 +8,6 @@ def run_command(command):
     """Helper function to run a shell command."""
     print(f"Running: {' '.join(command)}")
     result = subprocess.run(command)
-    if result.returncode != 0:
-        print(f"Error: Command failed with exit code {result.returncode}")
-        exit(result.returncode)
 
 def main():
     parser = argparse.ArgumentParser(description="Run the compiled project or a quick spike.")
