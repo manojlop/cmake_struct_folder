@@ -14,7 +14,7 @@ def run_command(command):
 
 def main():
     parser = argparse.ArgumentParser(description="Run the compiled project or a quick spike.")
-    parser.add_argument("-t", "--target", help="Specify the target executable to run", default="MyProject")
+    parser.add_argument("-t", "--target", help="Specify the target executable to run", default="main")
     parser.add_argument("-q", "--quick", help="Run quick mode (spike)", action="store_true")
     
     args = parser.parse_args()
@@ -23,7 +23,7 @@ def main():
     if args.quick:
         executable = os.path.join(build_dir, "spike")
     else:
-        executable = os.path.join(build_dir, args.target if args.target else "MyProject")
+        executable = os.path.join(build_dir, args.target if args.target else "main")
     
     if not os.path.exists(executable):
         print(f"Error: Executable {executable} not found. Did you compile it?")

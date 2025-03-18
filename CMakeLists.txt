@@ -5,7 +5,7 @@ cmake_minimum_required(VERSION 3.10)
 project(MyProject VERSION 1.0)
 
 # Specify the C++ standard
-set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
 # Set output directories for better organization
@@ -54,6 +54,8 @@ target_compile_options(main PRIVATE
     -Wall               # Enable all warnings
     -Wextra             # Enable extra warnings
     -pedantic           # Ensure compliance with language standards
+    -O0
+    -fno-elide-constructors
 )
 
 # Define preprocessor macros
